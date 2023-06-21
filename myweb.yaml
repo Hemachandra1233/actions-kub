@@ -17,7 +17,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: hemachandra1019/mvn-jenkins:<TAG>
+      - image: hemachandra1019/my-spring-boot-app:master
         imagePullPolicy: Always
         name: myweb
 
