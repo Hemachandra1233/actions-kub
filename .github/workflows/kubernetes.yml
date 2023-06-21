@@ -1,7 +1,7 @@
 name: CI/CD Pipeline
 
-# on: push 
-on: [pull_request]
+on: push 
+# on: [pull_request]
 
 env:
   KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
@@ -33,5 +33,4 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f kubeconfig.yaml --namespace ${{ env.K8S_NAMESPACE }}
           kubectl apply -f myweb.yaml
