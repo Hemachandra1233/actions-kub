@@ -37,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v2
         with:
-          images: default/hemachandra1019
+          images: hemachandra1019/my-spring-boot-app
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
