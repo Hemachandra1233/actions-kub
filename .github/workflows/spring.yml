@@ -1,0 +1,70 @@
+# name: CI/CD Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+
+# env:
+#   KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+#   CONTAINER_REGISTRY_USERNAME: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+#   CONTAINER_REGISTRY_PASSWORD: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+#   IMAGE_NAME: my-spring-boot-app
+#   K8S_NAMESPACE: my-namespace
+#   K8S_DEPLOYMENT_NAME: my-deployment
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Set up JDK 11
+#         uses: actions/setup-java@v2
+#         with:
+#           java-version: '11'
+
+#       - name: Build with Maven
+#         run: mvn clean install
+
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           tags: your-container-registry/${{ env.IMAGE_NAME }}:latest
+#           username: ${{ env.CONTAINER_REGISTRY_USERNAME }}
+#           password: ${{ env.CONTAINER_REGISTRY_PASSWORD }}
+
+#   deploy:
+#     needs: build
+    
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Set up JDK 11
+#         uses: actions/setup-java@v2
+#         with:
+#           java-version: '11'
+
+#       - name: Install kubectl
+#         run: |
+#           sudo apt-get update && sudo apt-get install -y apt-transport-https
+#           curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+#           echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+#           sudo apt-get update
+#           sudo apt-get install -y kubectl
+
+#       - name: Configure Kubernetes access
+#         run: echo "${{ env.KUBE_CONFIG_DATA }}" | base64 --decode > kubeconfig.yaml
+
+#       - name: Deploy to Kubernetes
+#         run: |
+#           kubectl apply -f kubeconfig.yaml --namespace ${{ env.K8S_NAMESPACE }}
+#           kubectl set image deployment/${{ env.K8S_DEPLOYMENT_NAME }} ${{ env.K8S_DEPLOYMENT_NAME }}=your-container-registry/${{ env.IMAGE_NAME }}:latest --namespace ${{ env.K8S_NAMESPACE }}
