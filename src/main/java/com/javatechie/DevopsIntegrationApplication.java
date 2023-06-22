@@ -13,6 +13,12 @@ public class DevopsIntegrationApplication {
 	public String message(){
 		return "welcome to javatechie";
 	}
+	
+	@GetMapping("/hello")
+	public String message(){
+		return "Hello From Hemachandra";
+	}
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(DevopsIntegrationApplication.class, args);
