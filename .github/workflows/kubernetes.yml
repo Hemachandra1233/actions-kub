@@ -34,5 +34,4 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           export KUBECONFIG=./kubeconfig.yaml
-          kubectl cluster-info
           kubectl apply -f myweb.yaml
